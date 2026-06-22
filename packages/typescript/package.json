@@ -1,13 +1,34 @@
 {
-  "name": "@peru-spatial-utils/core",
+  "name": "peru-spatial-utils",
   "version": "0.1.0",
   "description": "Spatial and territorial utilities for Peru (ubigeo, CRS/UTM, area, distance, bbox, territorial heuristics).",
   "license": "MIT",
+  "author": "Jhafet Canepa Maceda",
+  "homepage": "https://github.com/jafcn09/peru-spatial-utils#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jafcn09/peru-spatial-utils.git",
+    "directory": "packages/typescript"
+  },
+  "bugs": {
+    "url": "https://github.com/jafcn09/peru-spatial-utils/issues"
+  },
+  "keywords": [
+    "peru",
+    "ubigeo",
+    "inei",
+    "utm",
+    "wgs84",
+    "geospatial",
+    "gis",
+    "coordinates",
+    "territorial"
+  ],
   "type": "commonjs",
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
   "files": [
-    "dist",
+    "dist/src",
     "data"
   ],
   "scripts": {
