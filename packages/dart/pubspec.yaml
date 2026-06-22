@@ -1,5 +1,14 @@
 name: peru_spatial_utils
-description: Utilidades geoespaciales para el Peru. Ubigeo, CRS UTM, area, distancia, bbox y heuristicas territoriales.
-version: 1.0.0
+description: Utilidades geoespaciales para el Peru. Ubigeo INEI, conversion CRS UTM/WGS84, area, distancia, bbox y heuristicas territoriales.
+version: 0.1.0
+homepage: https://github.com/jafcn09/peru-spatial-utils
+repository: https://github.com/jafcn09/peru-spatial-utils
+issue_tracker: https://github.com/jafcn09/peru-spatial-utils/issues
+topics:
+  - peru
+  - geospatial
+  - gis
+  - ubigeo
+  - utm
 environment:
   sdk: ">=3.0.0 <4.0.0"
