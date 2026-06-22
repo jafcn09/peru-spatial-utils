@@ -1,0 +1,5 @@
+name: peru_spatial_utils
+description: Utilidades geoespaciales para el Peru. Ubigeo, CRS UTM, area, distancia, bbox y heuristicas territoriales.
+version: 1.0.0
+environment:
+  sdk: ">=3.0.0 <4.0.0"

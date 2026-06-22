@@ -1,0 +1,11 @@
+[package]
+name = "peru-spatial-utils"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.88"
+description = "Spatial utilities for Peruvian geodata: ubigeos, UTM/WGS84 conversion, area, distance, bounding box and territorial heuristics."
+license = "MIT"
+
+[lib]
+name = "peru_spatial_utils"
+path = "src/lib.rs"

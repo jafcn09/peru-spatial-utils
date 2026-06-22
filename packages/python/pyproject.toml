@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "peru-spatial-utils"
+version = "0.1.0"
+description = "Spatial utilities for Peru: ubigeo, UTM/WGS84, area, distance, bbox and territorial heuristics."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+
+[tool.setuptools.packages.find]
+include = ["peru_spatial_utils*"]
+
+[tool.setuptools.package-data]
+"peru_spatial_utils.data" = ["**/*.json"]

@@ -1,0 +1,39 @@
+SPEC.md
+CLAUDE.md
+.DS_Store
+data/ubigeo/_raw/
+
+# TypeScript / Node
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# Dart
+.dart_tool/
+.packages
+pubspec.lock
+
+# Go
+bin/
+
+# Java
+target/
+*.class
+.gradle/
+build/
+
+# Rust
+/packages/rust/target/
+Cargo.lock
+
+# C
+*.o
+*.out
+a.out

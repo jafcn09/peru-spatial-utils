@@ -1,0 +1,21 @@
+{
+  "name": "@peru-spatial-utils/core",
+  "version": "0.1.0",
+  "description": "Spatial and territorial utilities for Peru (ubigeo, CRS/UTM, area, distance, bbox, territorial heuristics).",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist",
+    "data"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "tsc -p tsconfig.json && node --test"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "typescript": "^5.4.5"
+  }
+}
