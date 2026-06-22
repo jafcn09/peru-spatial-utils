@@ -1,3 +1,6 @@
+const MAIL = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>';
+const MAILTO = 'mailto:jafetcanepamaceda05@gmail.com?subject=peru-spatial-utils';
+
 const I18N = {
   es: {
     'nav.demo': 'Demo', 'nav.api': 'API', 'nav.help': 'Ayuda', 'nav.security': 'Seguridad', 'nav.cookies': 'Cookies',
@@ -34,7 +37,7 @@ toUTM(-3.683, -80.451);       // { zone: 17, easting: 560966, northing: 9592893 
       <p>Reportala de forma responsable:</p>
       <ul>
         <li>Crea un aviso privado en <a href="https://github.com/jafcn09/peru-spatial-utils/security/advisories/new" target="_blank" rel="noopener">GitHub Security Advisories</a>, o</li>
-        <li>Escribe a <a href="mailto:jafetcanepamaceda05@gmail.com">jafetcanepamaceda05@gmail.com</a> con el detalle y los pasos para reproducir.</li>
+        <li><a class="mail-link" href="${MAILTO}">${MAIL} Escribeme por correo</a> con el detalle y los pasos para reproducir.</li>
       </ul>
       <p>Por favor no la publiques hasta que exista una correccion.</p>
       <h2>Que esperar</h2>
@@ -61,7 +64,7 @@ toUTM(-3.683, -80.451);       // { zone: 17, easting: 560966, northing: 9592893 
         <li>Borra el almacenamiento del sitio desde tu navegador para restablecer las preferencias.</li>
       </ul>
       <h2>Contacto</h2>
-      <p>Dudas: <a href="mailto:jafetcanepamaceda05@gmail.com">jafetcanepamaceda05@gmail.com</a>.</p>`,
+      <p>Dudas: <a class="mail-link" href="${MAILTO}">${MAIL} escribeme por correo</a>.</p>`,
   },
   en: {
     'nav.demo': 'Demo', 'nav.api': 'API', 'nav.help': 'Help', 'nav.security': 'Security', 'nav.cookies': 'Cookies',
@@ -98,7 +101,7 @@ toUTM(-3.683, -80.451);       // { zone: 17, easting: 560966, northing: 9592893 
       <p>Please report it responsibly:</p>
       <ul>
         <li>Open a private advisory on <a href="https://github.com/jafcn09/peru-spatial-utils/security/advisories/new" target="_blank" rel="noopener">GitHub Security Advisories</a>, or</li>
-        <li>Email <a href="mailto:jafetcanepamaceda05@gmail.com">jafetcanepamaceda05@gmail.com</a> with details and reproduction steps.</li>
+        <li><a class="mail-link" href="${MAILTO}">${MAIL} Email me</a> with details and reproduction steps.</li>
       </ul>
       <p>Please do not disclose it publicly until a fix is available.</p>
       <h2>What to expect</h2>
@@ -125,25 +128,38 @@ toUTM(-3.683, -80.451);       // { zone: 17, easting: 560966, northing: 9592893 
         <li>Clear the site storage from your browser settings to reset preferences.</li>
       </ul>
       <h2>Contact</h2>
-      <p>Questions: <a href="mailto:jafetcanepamaceda05@gmail.com">jafetcanepamaceda05@gmail.com</a>.</p>`,
+      <p>Questions: <a class="mail-link" href="${MAILTO}">${MAIL} email me</a>.</p>`,
   },
 };
 
 let lang = (document.documentElement.getAttribute('lang') === 'en') ? 'en' : 'es';
 
-function apply() {
+function applyText() {
   const d = I18N[lang];
   document.querySelectorAll('[data-i18n]').forEach((node) => {
     const key = node.getAttribute('data-i18n');
     if (d[key] != null) node.textContent = d[key];
   });
-  document.querySelectorAll('[data-i18n-html]').forEach((node) => {
-    const key = node.getAttribute('data-i18n-html');
-    if (d[key] != null) node.innerHTML = d[key];
-  });
   document.documentElement.setAttribute('lang', lang);
   const btn = document.getElementById('langToggle');
   if (btn) btn.textContent = lang === 'es' ? 'EN' : 'ES';
+}
+
+function applyBody() {
+  const d = I18N[lang];
+  document.querySelectorAll('[data-i18n-html]').forEach((node) => {
+    const key = node.getAttribute('data-i18n-html');
+    if (d[key] != null) node.innerHTML = `<div style="animation: fadeUp 0.4s var(--ease) both">${d[key]}</div>`;
+  });
+}
+
+function bodySkeleton() {
+  const rows = [
+    ['40%', '18px', '0'], ['94%', '12px', '14px'], ['86%', '12px', '14px'], ['68%', '12px', '14px'],
+    ['45%', '18px', '30px'], ['92%', '12px', '14px'], ['80%', '12px', '14px'],
+  ];
+  const html = rows.map((r) => `<div class="sk-line skeleton" style="width:${r[0]};height:${r[1]};margin-top:${r[2]}"></div>`).join('');
+  document.querySelectorAll('[data-i18n-html]').forEach((node) => { node.innerHTML = html; });
 }
 
 function setupTheme() {
@@ -162,10 +178,13 @@ function setupLang() {
   btn.addEventListener('click', () => {
     lang = lang === 'es' ? 'en' : 'es';
     try { localStorage.setItem('psu-lang', lang); } catch (e) {}
-    apply();
+    applyText();
+    applyBody();
   });
 }
 
-apply();
+applyText();
+bodySkeleton();
 setupTheme();
 setupLang();
+setTimeout(applyBody, 480);

@@ -147,13 +147,34 @@ function applyStatic() {
   if (btn) btn.textContent = lang === 'es' ? 'EN' : 'ES';
 }
 
+function skeletonFeatures() {
+  const host = document.getElementById('features');
+  if (!host) return;
+  host.innerHTML = '';
+  for (let i = 0; i < 6; i += 1) {
+    host.appendChild(el(`<div class="sk-feature">
+      <div class="sk-icon skeleton"></div>
+      <div class="sk-line skeleton" style="width:50%;margin-top:18px"></div>
+      <div class="sk-line skeleton" style="width:92%"></div>
+      <div class="sk-line skeleton" style="width:78%"></div>
+    </div>`));
+  }
+}
+
+function skeletonApi() {
+  const host = document.getElementById('apiList');
+  if (!host) return;
+  host.innerHTML = '';
+  for (let i = 0; i < 6; i += 1) host.appendChild(el('<div class="sk-api skeleton"></div>'));
+}
+
 function renderFeatures() {
   const host = document.getElementById('features');
   if (!host) return;
   host.innerHTML = '';
   const d = dict();
   FEATURES.forEach((f, i) => {
-    host.appendChild(el(`<article class="feature reveal is-visible" data-delay="${i % 3}">
+    host.appendChild(el(`<article class="feature" style="animation: fadeUp 0.45s var(--ease) ${i * 60}ms both">
       <div class="feature-icon">${f.icon}</div>
       <h3>${d.features[f.id].title}</h3>
       <p>${d.features[f.id].text}</p>
@@ -167,7 +188,7 @@ function renderApi() {
   host.innerHTML = '';
   const d = dict();
   API.forEach((a, i) => {
-    host.appendChild(el(`<details class="api-item reveal is-visible" data-delay="${i % 3}">
+    host.appendChild(el(`<details class="api-item" style="animation: fadeUp 0.4s var(--ease) ${i * 50}ms both">
       <summary class="api-summary">
         <span class="mono">${a.sig}</span>
         <span style="display:flex;align-items:center;gap:12px">
@@ -183,6 +204,17 @@ function renderApi() {
   });
 }
 
+function lazyRender(id, render) {
+  const node = document.getElementById(id);
+  if (!node || !('IntersectionObserver' in window)) { render(); return; }
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) { setTimeout(render, 280); obs.disconnect(); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+  obs.observe(node);
+}
+
 function resultRow(iconKey, key, value) {
   return `<div class="result-row">
     <span class="result-icon">${icons[iconKey]}</span>
@@ -190,31 +222,26 @@ function resultRow(iconKey, key, value) {
   </div>`;
 }
 
-function renderResult(raw) {
+function demoSkeleton() {
+  const list = document.getElementById('result');
+  document.getElementById('resultExtra').innerHTML = '';
+  let html = '';
+  for (let i = 0; i < 3; i += 1) {
+    html += `<div class="result-row" style="opacity:1;transform:none">
+      <span class="result-icon skeleton"></span>
+      <span style="flex:1">
+        <span class="sk-line skeleton" style="width:35%;margin:0"></span>
+        <span class="sk-line skeleton" style="width:65%;margin-top:8px"></span>
+      </span>
+    </div>`;
+  }
+  list.innerHTML = html;
+}
+
+function buildResult(code) {
   const list = document.getElementById('result');
   const extra = document.getElementById('resultExtra');
-  const hint = document.getElementById('ubigeoHint');
   const d = dict();
-  const code = (raw || '').replace(/\D/g, '');
-  list.innerHTML = '';
-  extra.innerHTML = '';
-
-  if (code.length !== 2 && code.length !== 4 && code.length !== 6) {
-    hint.textContent = d['demo.hintLen'];
-    hint.removeAttribute('data-state');
-    list.innerHTML = `<p class="result-empty">${d['demo.waiting']}</p>`;
-    return;
-  }
-  if (!PSU.isValidUbigeo(code)) {
-    hint.textContent = d['demo.hintNotFound'];
-    hint.setAttribute('data-state', 'error');
-    list.innerHTML = `<p class="result-empty">${d['demo.none']}</p>`;
-    return;
-  }
-
-  hint.textContent = d['demo.hint'];
-  hint.removeAttribute('data-state');
-
   const region = PSU.getRegion(code.slice(0, 2));
   const province = code.length >= 4 ? PSU.getProvince(code.slice(0, 4)) : null;
   const district = code.length === 6 ? PSU.getDistrict(code) : null;
@@ -226,6 +253,7 @@ function renderResult(raw) {
   list.innerHTML = html;
   list.querySelectorAll('.result-row').forEach((r, i) => setTimeout(() => r.classList.add('show'), i * 90));
 
+  extra.innerHTML = '';
   const target = district || province || region;
   if (target && typeof target.lat === 'number' && typeof target.lng === 'number') {
     const utm = PSU.toUTM(target.lat, target.lng);
@@ -235,17 +263,50 @@ function renderResult(raw) {
   }
 }
 
+let demoTimer;
+function renderResult(raw, useSkeleton) {
+  const list = document.getElementById('result');
+  const extra = document.getElementById('resultExtra');
+  const hint = document.getElementById('ubigeoHint');
+  const d = dict();
+  const code = (raw || '').replace(/\D/g, '');
+  clearTimeout(demoTimer);
+
+  if (code.length !== 2 && code.length !== 4 && code.length !== 6) {
+    extra.innerHTML = '';
+    hint.textContent = d['demo.hintLen'];
+    hint.removeAttribute('data-state');
+    list.innerHTML = `<p class="result-empty">${d['demo.waiting']}</p>`;
+    return;
+  }
+  if (!PSU.isValidUbigeo(code)) {
+    extra.innerHTML = '';
+    hint.textContent = d['demo.hintNotFound'];
+    hint.setAttribute('data-state', 'error');
+    list.innerHTML = `<p class="result-empty">${d['demo.none']}</p>`;
+    return;
+  }
+
+  hint.textContent = d['demo.hint'];
+  hint.removeAttribute('data-state');
+  if (useSkeleton) {
+    demoSkeleton();
+    demoTimer = setTimeout(() => buildResult(code), 260);
+  } else {
+    buildResult(code);
+  }
+}
+
 function setupDemo() {
   const input = document.getElementById('ubigeo');
-  if (!input) return;
-  const run = () => renderResult(input.value);
-  input.addEventListener('input', run);
+  if (!input) return () => {};
+  input.addEventListener('input', () => renderResult(input.value, false));
   document.querySelectorAll('.chip').forEach((chip) => chip.addEventListener('click', () => {
     input.value = chip.dataset.code;
-    run();
+    renderResult(input.value, true);
     input.focus();
   }));
-  return run;
+  return (skeleton) => renderResult(input.value, skeleton);
 }
 
 function setupTabs() {
@@ -347,9 +408,12 @@ function setYear() {
 }
 
 applyStatic();
-renderFeatures();
-renderApi();
+skeletonFeatures();
+skeletonApi();
+lazyRender('features', renderFeatures);
+lazyRender('apiList', renderApi);
 const runDemo = setupDemo();
+runDemo(true);
 setupTabs();
 setupCopy();
 setupNav();

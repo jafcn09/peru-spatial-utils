@@ -506,6 +506,8 @@ input:focus-visible {
 .doc ul { padding-left: 22px; }
 .doc a { color: var(--accent-strong); font-weight: 500; }
 .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent-strong); font-weight: 600; font-size: 14px; }
+.mail-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent-strong); font-weight: 600; }
+.mail-link svg { flex-shrink: 0; }
 
 /* Reveal animation */
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
@@ -631,8 +633,67 @@ input:focus-visible {
   .controls { margin-left: auto; }
 }
 
+/* Preloader (themed + i18n via CSS) */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  animation: preloaderOut 0.5s var(--ease) 0.8s forwards;
+}
+.preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  animation: fadeUp 0.4s var(--ease);
+}
+.preloader .brand-mark { width: 48px; height: 48px; border-radius: 15px; }
+.spinner {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+.preloader-text {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.preloader-text::after { content: 'Cargando'; }
+:root[lang='en'] .preloader-text::after { content: 'Loading'; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes preloaderOut { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+
+/* Skeleton loaders */
+.skeleton { position: relative; overflow: hidden; background: var(--surface-2); border-radius: var(--radius-sm); }
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: shimmer 1.5s var(--ease) infinite;
+}
+:root[data-theme='dark'] .skeleton::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+}
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+.sk-feature { border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; background: var(--surface); }
+.sk-icon { width: 44px; height: 44px; border-radius: 12px; }
+.sk-line { height: 12px; border-radius: 6px; margin-top: 12px; }
+.sk-api { height: 58px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; }
   .hero-grid { animation: none; }
+  .preloader { display: none !important; }
+  .skeleton::after { display: none; }
 }
