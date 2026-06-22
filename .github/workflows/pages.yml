@@ -1,4 +1,5 @@
 name: Deploy site to GitHub Pages
+# Publica el contenido de site/ en GitHub Pages
 
 on:
   push:
