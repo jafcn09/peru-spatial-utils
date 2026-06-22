@@ -1,4 +1,4 @@
-# peru-spatial-utils
+# @coderesolutions/peru-spatial-utils
 
 Lightweight spatial and territorial utilities for Peru: INEI ubigeos, UTM/WGS84
 coordinate conversion, area/distance/bounding-box helpers and territorial
@@ -10,7 +10,7 @@ https://github.com/jafcn09/peru-spatial-utils
 ## Install
 
 ```sh
-npm install peru-spatial-utils
+npm install @coderesolutions/peru-spatial-utils
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ import {
   toUTM, toWGS84, toHectares, toKm2, formatArea,
   distance, boundingBox,
   recommendationFor, classifyHazard, calculateTerritorialRisk,
-} from "peru-spatial-utils";
+} from "@coderesolutions/peru-spatial-utils";
 
 getRegion("24");          // { code: "24", name: "Tumbes", ... }
 getDistrict("240203");    // { name: "Canoas de Punta Sal", ... }

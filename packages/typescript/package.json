@@ -1,6 +1,9 @@
 {
-  "name": "peru-spatial-utils",
+  "name": "@coderesolutions/peru-spatial-utils",
   "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Spatial and territorial utilities for Peru (ubigeo, CRS/UTM, area, distance, bbox, territorial heuristics).",
   "license": "MIT",
   "author": "Jhafet Canepa Maceda",
