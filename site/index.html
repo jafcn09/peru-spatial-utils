@@ -42,6 +42,7 @@
         <a href="#demo" data-i18n="nav.demo">Demo</a>
         <a href="#instalacion" data-i18n="nav.install">Instalacion</a>
         <a href="#api" data-i18n="nav.api">API</a>
+        <a href="#playground" data-i18n="nav.playground">Playground</a>
         <a href="ayuda.html" data-i18n="nav.help">Ayuda</a>
         <a class="nav-cta" href="https://github.com/jafcn09/peru-spatial-utils" target="_blank" rel="noopener">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.46-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.85.09-.67.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.05a9.32 9.32 0 0 1 5 0c1.91-1.32 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9v2.82c0 .27.18.6.69.49A10.03 10.03 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
@@ -92,7 +93,12 @@ Ligera, sin dependencias y disponible para TypeScript, Python, Dart, Go, Java, R
         </div>
         <div class="demo-grid">
           <div class="demo-card reveal">
-            <label class="field-label" for="ubigeo" data-i18n="demo.label">Codigo de ubigeo (INEI)</label>
+            <div class="ac-wrap">
+              <label class="field-label" for="ubigeoName" data-i18n="demo.search">Buscar distrito por nombre</label>
+              <input class="field-input" id="ubigeoName" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="acList" data-i18n-ph="demo.searchPh" placeholder="Ej. Canoas de Punta Sal" />
+              <div class="ac-list" id="acList" role="listbox" hidden></div>
+            </div>
+            <label class="field-label" for="ubigeo" data-i18n="demo.label" style="margin-top:16px">Codigo de ubigeo (INEI)</label>
             <input class="field-input" id="ubigeo" inputmode="numeric" autocomplete="off" maxlength="6" value="240203" aria-describedby="ubigeoHint" />
             <p class="field-hint" id="ubigeoHint" data-i18n="demo.hint">2 digitos = departamento, 4 = provincia, 6 = distrito.</p>
             <div class="chips" aria-label="Ejemplos">
@@ -105,6 +111,15 @@ Ligera, sin dependencias y disponible para TypeScript, Python, Dart, Go, Java, R
           <div class="demo-card reveal" data-delay="1">
             <div class="result-list" id="result" aria-live="polite"></div>
             <div class="result-extra" id="resultExtra"></div>
+            <div class="result-actions" id="resultActions" hidden>
+              <button class="btn btn-ghost btn-sm" id="copyJson" type="button" data-i18n="demo.copyJson">Copiar JSON</button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-card map-card reveal" data-delay="2">
+          <div class="map-wrap">
+            <div id="peruMap"></div>
+            <p class="map-caption" id="mapCaption" data-i18n="map.caption">Consulta un ubigeo para resaltar su departamento.</p>
           </div>
         </div>
       </div>
@@ -168,6 +183,24 @@ Ligera, sin dependencias y disponible para TypeScript, Python, Dart, Go, Java, R
           <p data-i18n="api.sub">Nombres en camelCase; cada lenguaje adapta su convencion idiomatica.</p>
         </div>
         <div class="api-list" id="apiList"></div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="playground">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow" data-i18n="pg.eyebrow">Playground</span>
+          <h2 data-i18n="pg.title">Ejemplos por lenguaje</h2>
+          <p data-i18n="pg.sub">Elige una funcion y un lenguaje, y copia el snippet.</p>
+        </div>
+        <div class="pg-card reveal">
+          <div class="pg-row" id="pgFns" role="group" aria-label="Funciones"></div>
+          <div class="tabs pg-langs" id="pgLangs" role="tablist" aria-label="Lenguajes"></div>
+          <div class="codeblock pg-code-wrap">
+            <button class="copy-btn" type="button" id="pgCopy" data-i18n="copy">Copiar</button>
+            <pre id="pgCode"></pre>
+          </div>
+        </div>
       </div>
     </section>
   </main>

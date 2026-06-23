@@ -1,4 +1,6 @@
 import * as PSU from '../../packages/typescript/dist/src/index.js';
+import { PERU_MAP } from './peru-map-data.js';
+import { PG_LANGS, PG_FUNCS, PG_SNIPPETS } from './playground-data.js';
 
 const icons = {
   district: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>',
@@ -37,7 +39,11 @@ const API = [
 
 const I18N = {
   es: {
-    'nav.skip': 'Saltar al contenido', 'nav.demo': 'Demo', 'nav.install': 'Instalacion', 'nav.api': 'API', 'nav.help': 'Ayuda',
+    'nav.skip': 'Saltar al contenido', 'nav.demo': 'Demo', 'nav.install': 'Instalacion', 'nav.api': 'API', 'nav.help': 'Ayuda', 'nav.playground': 'Playground',
+    'res.distance': 'Distancia a Lima', 'res.bbox': 'Bounding box (depto)',
+    'demo.search': 'Buscar distrito por nombre', 'demo.searchPh': 'Ej. Canoas de Punta Sal', 'demo.copyJson': 'Copiar JSON', 'demo.jsonCopied': 'JSON copiado', 'ac.empty': 'Sin resultados',
+    'map.caption': 'Consulta o toca un departamento para resaltarlo.', 'map.dept': 'Departamento',
+    'pg.eyebrow': 'Playground', 'pg.title': 'Ejemplos por lenguaje', 'pg.sub': 'Elige una funcion y un lenguaje, y copia el snippet.',
     'hero.eyebrow': 'Open source · MIT',
     'hero.title': 'Construye aplicaciones geoespaciales para Perú desde cualquier lenguaje.',
     'hero.lead': 'Ubigeos INEI, conversión UTM/WGS84, coordenadas, áreas, distancias y análisis territorial.'
@@ -80,7 +86,11 @@ const I18N = {
     },
   },
   en: {
-    'nav.skip': 'Skip to content', 'nav.demo': 'Demo', 'nav.install': 'Install', 'nav.api': 'API', 'nav.help': 'Help',
+    'nav.skip': 'Skip to content', 'nav.demo': 'Demo', 'nav.install': 'Install', 'nav.api': 'API', 'nav.help': 'Help', 'nav.playground': 'Playground',
+    'res.distance': 'Distance to Lima', 'res.bbox': 'Bounding box (dept)',
+    'demo.search': 'Search district by name', 'demo.searchPh': 'e.g. Canoas de Punta Sal', 'demo.copyJson': 'Copy JSON', 'demo.jsonCopied': 'JSON copied', 'ac.empty': 'No results',
+    'map.caption': 'Look up or tap a department to highlight it.', 'map.dept': 'Department',
+    'pg.eyebrow': 'Playground', 'pg.title': 'Examples by language', 'pg.sub': 'Pick a function and a language, then copy the snippet.',
     'hero.eyebrow': 'Open source · MIT',
     'hero.title': 'Peru spatial data, in any language',
     'hero.lead': 'INEI ubigeos, UTM/WGS84 conversion, area, distance, bounding box and territorial analysis. Lightweight, dependency-free and verified against the same vectors in TypeScript, Python, Dart, Go, Java, Rust and C.',
@@ -141,6 +151,10 @@ function applyStatic() {
   document.querySelectorAll('[data-i18n-html]').forEach((node) => {
     const key = node.getAttribute('data-i18n-html');
     if (d[key] != null) node.innerHTML = d[key];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach((node) => {
+    const key = node.getAttribute('data-i18n-ph');
+    if (d[key] != null) node.setAttribute('placeholder', d[key]);
   });
   document.documentElement.setAttribute('lang', lang);
   const btn = document.getElementById('langToggle');
@@ -238,9 +252,28 @@ function demoSkeleton() {
   list.innerHTML = html;
 }
 
+const LIMA = [-77.0428, -12.0464];
+let lastResult = null;
+
+function highlightDept(code) {
+  const host = document.getElementById('peruMap');
+  const cap = document.getElementById('mapCaption');
+  const d = dict();
+  if (host) {
+    host.querySelectorAll('path').forEach((p) => {
+      p.classList.toggle('active', code != null && p.getAttribute('data-code') === code);
+    });
+  }
+  if (!cap) return;
+  const dept = code ? PERU_MAP.depts.find((x) => x.code === code) : null;
+  if (dept) cap.innerHTML = `${d['map.dept']}: <strong>${dept.name}</strong>`;
+  else cap.textContent = d['map.caption'];
+}
+
 function buildResult(code) {
   const list = document.getElementById('result');
   const extra = document.getElementById('resultExtra');
+  const actions = document.getElementById('resultActions');
   const d = dict();
   const region = PSU.getRegion(code.slice(0, 2));
   const province = code.length >= 4 ? PSU.getProvince(code.slice(0, 4)) : null;
@@ -253,14 +286,135 @@ function buildResult(code) {
   list.innerHTML = html;
   list.querySelectorAll('.result-row').forEach((r, i) => setTimeout(() => r.classList.add('show'), i * 90));
 
-  extra.innerHTML = '';
+  highlightDept(region ? region.code : null);
+
   const target = district || province || region;
+  const stats = [];
+  let utm = null;
   if (target && typeof target.lat === 'number' && typeof target.lng === 'number') {
-    const utm = PSU.toUTM(target.lat, target.lng);
-    extra.innerHTML = `
-      <div class="stat"><span class="result-key">${d['res.coords']}</span><span class="stat-val">${target.lat.toFixed(4)}, ${target.lng.toFixed(4)}</span></div>
-      <div class="stat"><span class="result-key">UTM ${utm.zone}${utm.hemisphere}</span><span class="stat-val">${utm.easting}E ${utm.northing}N</span></div>`;
+    utm = PSU.toUTM(target.lat, target.lng);
+    stats.push(`<div class="stat"><span class="result-key">${d['res.coords']}</span><span class="stat-val">${target.lat.toFixed(4)}, ${target.lng.toFixed(4)}</span></div>`);
+    stats.push(`<div class="stat"><span class="result-key">UTM ${utm.zone}${utm.hemisphere}</span><span class="stat-val">${utm.easting}E ${utm.northing}N</span></div>`);
+    const km = PSU.distance([target.lng, target.lat], LIMA);
+    stats.push(`<div class="stat"><span class="result-key">${d['res.distance']}</span><span class="stat-val">${km.toFixed(1)} km</span></div>`);
   }
+  if (region) {
+    const dept = PERU_MAP.depts.find((x) => x.code === region.code);
+    if (dept) {
+      const poly = { type: 'Polygon', coordinates: [[
+        [dept.bbox[0], dept.bbox[1]], [dept.bbox[2], dept.bbox[1]],
+        [dept.bbox[2], dept.bbox[3]], [dept.bbox[0], dept.bbox[3]], [dept.bbox[0], dept.bbox[1]],
+      ]] };
+      const bb = PSU.boundingBox(poly);
+      stats.push(`<div class="stat"><span class="result-key">${d['res.bbox']}</span><span class="stat-val">${bb.minX}, ${bb.minY} / ${bb.maxX}, ${bb.maxY}</span></div>`);
+    }
+  }
+  extra.innerHTML = stats.join('');
+
+  lastResult = {
+    code,
+    distrito: district ? district.name : null,
+    provincia: province ? province.name : null,
+    departamento: region ? region.name : null,
+    lat: target ? target.lat : null,
+    lng: target ? target.lng : null,
+    utm: utm ? { zone: utm.zone, hemisphere: utm.hemisphere, epsg: utm.epsg, easting: utm.easting, northing: utm.northing } : null,
+  };
+  if (actions) actions.hidden = false;
+}
+
+function renderMap() {
+  const host = document.getElementById('peruMap');
+  if (!host) return;
+  const paths = PERU_MAP.depts
+    .map((dp) => `<path data-code="${dp.code}" d="${dp.d}" fill-rule="evenodd"><title>${dp.name}</title></path>`)
+    .join('');
+  host.innerHTML = `<svg class="peru-map" viewBox="${PERU_MAP.viewBox}" role="img" aria-label="Mapa del Peru">${paths}</svg>`;
+  host.querySelectorAll('path').forEach((p) => p.addEventListener('click', () => {
+    const code = p.getAttribute('data-code');
+    const input = document.getElementById('ubigeo');
+    if (input) { input.value = code; renderResult(code, true); }
+  }));
+}
+
+function setupAutocomplete() {
+  const input = document.getElementById('ubigeoName');
+  const listEl = document.getElementById('acList');
+  const codeInput = document.getElementById('ubigeo');
+  if (!input || !listEl) return;
+  const close = () => { listEl.hidden = true; listEl.innerHTML = ''; input.setAttribute('aria-expanded', 'false'); };
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    if (q.length < 2) { close(); return; }
+    const matches = PSU.searchDistricts(q, 8);
+    if (!matches.length) {
+      listEl.innerHTML = `<div class="ac-empty">${dict()['ac.empty']}</div>`;
+      listEl.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+      return;
+    }
+    listEl.innerHTML = matches
+      .map((m) => `<div class="ac-item" role="option" data-code="${m.code}"><span>${m.name}</span><span class="ac-code">${m.code}</span></div>`)
+      .join('');
+    listEl.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+    listEl.querySelectorAll('.ac-item').forEach((item) => item.addEventListener('mousedown', (ev) => {
+      ev.preventDefault();
+      if (codeInput) { codeInput.value = item.getAttribute('data-code'); renderResult(codeInput.value, true); }
+      input.value = item.querySelector('span').textContent;
+      close();
+    }));
+  });
+  input.addEventListener('blur', () => setTimeout(close, 120));
+}
+
+function setupCopyJson() {
+  const btn = document.getElementById('copyJson');
+  if (!btn) return;
+  btn.addEventListener('click', async () => {
+    if (!lastResult) return;
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(lastResult, null, 2));
+      btn.textContent = dict()['demo.jsonCopied'];
+      setTimeout(() => { btn.textContent = dict()['demo.copyJson']; }, 1800);
+    } catch (e) {
+      btn.textContent = '!';
+    }
+  });
+}
+
+let pgFn = PG_FUNCS[0];
+let pgLang = PG_LANGS[0][0];
+
+function renderPlayground() {
+  const fnHost = document.getElementById('pgFns');
+  const langHost = document.getElementById('pgLangs');
+  const codeEl = document.getElementById('pgCode');
+  if (!fnHost || !langHost || !codeEl) return;
+  fnHost.innerHTML = PG_FUNCS
+    .map((f) => `<button class="pg-fn" type="button" aria-pressed="${f === pgFn}" data-fn="${f}">${f}</button>`)
+    .join('');
+  langHost.innerHTML = PG_LANGS
+    .map(([id, label]) => `<button class="tab" type="button" role="tab" aria-selected="${id === pgLang}" data-lang="${id}">${label}</button>`)
+    .join('');
+  fnHost.querySelectorAll('.pg-fn').forEach((b) => b.addEventListener('click', () => { pgFn = b.getAttribute('data-fn'); renderPlayground(); }));
+  langHost.querySelectorAll('.tab').forEach((b) => b.addEventListener('click', () => { pgLang = b.getAttribute('data-lang'); renderPlayground(); }));
+  codeEl.textContent = PG_SNIPPETS[pgFn][pgLang];
+}
+
+function setupPgCopy() {
+  const btn = document.getElementById('pgCopy');
+  if (!btn) return;
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(PG_SNIPPETS[pgFn][pgLang]);
+      btn.textContent = dict()['copied'];
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = dict()['copy']; btn.classList.remove('copied'); }, 1800);
+    } catch (e) {
+      btn.textContent = '!';
+    }
+  });
 }
 
 let demoTimer;
@@ -412,7 +566,12 @@ skeletonFeatures();
 skeletonApi();
 lazyRender('features', renderFeatures);
 lazyRender('apiList', renderApi);
+renderMap();
+renderPlayground();
 const runDemo = setupDemo();
+setupAutocomplete();
+setupCopyJson();
+setupPgCopy();
 runDemo(true);
 setupTabs();
 setupCopy();
