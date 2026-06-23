@@ -692,11 +692,27 @@ input:focus-visible {
 
 /* Interactive map */
 .map-card { margin-top: 24px; }
-.map-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-.peru-map { width: 100%; max-width: 340px; height: auto; display: block; }
-.peru-map path { fill: var(--surface-2); stroke: var(--border); stroke-width: 0.6; transition: fill 0.25s var(--ease), stroke 0.25s var(--ease); }
+.map-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.map-toolbar { width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: 8px; }
+.map-select {
+  width: 100%;
+  font-family: var(--font);
+  font-size: 15px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+.map-select:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.12); outline: none; }
+.peru-map { width: 100%; max-width: 440px; height: auto; display: block; }
+.peru-map path { fill: #e7eaef; stroke: #c4cad3; stroke-width: 0.6; transition: fill 0.25s var(--ease), stroke 0.25s var(--ease); }
 .peru-map path:hover { fill: var(--accent-soft); }
-.peru-map path.active { fill: var(--accent); stroke: var(--accent-strong); }
+.peru-map path.active { fill: var(--accent); stroke: var(--accent-strong); stroke-width: 0.9; }
+:root[data-theme='dark'] .peru-map path { fill: #25395a; stroke: #46597b; }
+:root[data-theme='dark'] .peru-map path:hover { fill: #2f4d62; }
+:root[data-theme='dark'] .peru-map path.active { fill: var(--accent); stroke: #99f6e4; }
 .map-caption { font-size: 13px; color: var(--muted); text-align: center; max-width: 40ch; }
 .map-caption strong { color: var(--text); }
 

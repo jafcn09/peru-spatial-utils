@@ -118,8 +118,12 @@ Ligera, sin dependencias y disponible para TypeScript, Python, Dart, Go, Java, R
         </div>
         <div class="demo-card map-card reveal" data-delay="2">
           <div class="map-wrap">
+            <div class="map-toolbar">
+              <label class="field-label" for="deptSelect" data-i18n="map.select">Elegir departamento</label>
+              <select class="map-select" id="deptSelect" aria-label="Departamento"></select>
+            </div>
             <div id="peruMap"></div>
-            <p class="map-caption" id="mapCaption" data-i18n="map.caption">Consulta un ubigeo para resaltar su departamento.</p>
+            <p class="map-caption" id="mapCaption" data-i18n="map.caption">Consulta o toca un departamento para resaltarlo.</p>
           </div>
         </div>
       </div>
