@@ -7,64 +7,64 @@ const I18N = {
     'back': 'Volver al inicio',
     'foot.help': 'Ayuda', 'foot.security': 'Seguridad', 'foot.cookies': 'Cookies',
     'ayuda.title': 'Ayuda',
-    'ayuda.sub': 'Guia rapida de instalacion, uso y preguntas frecuentes.',
+    'ayuda.sub': 'Guía rápida de instalación, uso y preguntas frecuentes.',
     'ayuda.body': `
-      <h2>Instalacion</h2>
+      <h2>Instalación</h2>
       <p>Elige el paquete de tu ecosistema:</p>
       <ul>
         <li><strong>npm:</strong> <span class="mono">npm install @coderesolutions/peru-spatial-utils</span></li>
         <li><strong>pub.dev:</strong> <span class="mono">peru_spatial_utils: ^0.1.0</span></li>
         <li><strong>Maven:</strong> <span class="mono">io.github.jafcn09:peru-spatial-utils:0.1.0</span></li>
       </ul>
-      <h2>Uso basico</h2>
+      <h2>Uso básico</h2>
       <p>La API es la misma en todos los lenguajes. Un ejemplo en TypeScript:</p>
       <div class="codeblock"><pre>import { getDistrict, toUTM } from "@coderesolutions/peru-spatial-utils";
 
 getDistrict("240203").name;   // "Canoas de Punta Sal"
 toUTM(-3.683, -80.451);       // { zone: 17, easting: 560966, northing: 9592893 }</pre></div>
       <h2>Preguntas frecuentes</h2>
-      <p><strong>De donde provienen los ubigeos?</strong><br>Usan los codigos y nombres oficiales del INEI: 25 departamentos, 196 provincias y 1893 distritos.</p>
-      <p><strong>Que datum usan las coordenadas?</strong><br>WGS84, de forma explicita, para las zonas UTM 17S, 18S y 19S del Peru.</p>
-      <p><strong>El analisis territorial es oficial?</strong><br>No. El riesgo y las recomendaciones son heuristicas de referencia y no reemplazan la opinion tecnica de las autoridades competentes.</p>
+      <p><strong>¿De dónde provienen los ubigeos?</strong><br>Usan los códigos y nombres oficiales del INEI: 25 departamentos, 196 provincias y 1893 distritos.</p>
+      <p><strong>¿Qué datum usan las coordenadas?</strong><br>WGS84, de forma explícita, para las zonas UTM 17S, 18S y 19S del Perú.</p>
+      <p><strong>¿El análisis territorial es oficial?</strong><br>No. El riesgo y las recomendaciones son heurísticas de referencia y no reemplazan la opinión técnica de las autoridades competentes.</p>
       <h2>Soporte</h2>
       <p>Reporta problemas o solicita funciones en <a href="https://github.com/jafcn09/peru-spatial-utils/issues" target="_blank" rel="noopener">GitHub Issues</a>.</p>`,
-    'seg.title': 'Politica de seguridad',
-    'seg.sub': 'Ultima actualizacion: junio de 2026.',
+    'seg.title': 'Política de seguridad',
+    'seg.sub': 'Última actualización: junio de 2026.',
     'seg.body': `
       <h2>Versiones soportadas</h2>
-      <p>Se atienden reportes de seguridad sobre la ultima version publicada (0.1.x) en npm, pub.dev y Maven Central.</p>
+      <p>Se atienden reportes de seguridad sobre la última versión publicada (0.1.x) en npm, pub.dev y Maven Central.</p>
       <h2>Reportar una vulnerabilidad</h2>
-      <p>Reportala de forma responsable:</p>
+      <p>Repórtala de forma responsable:</p>
       <ul>
         <li>Crea un aviso privado en <a href="https://github.com/jafcn09/peru-spatial-utils/security/advisories/new" target="_blank" rel="noopener">GitHub Security Advisories</a>, o</li>
-        <li><a class="mail-link" href="${MAILTO}">${MAIL} Escribeme por correo</a> con el detalle y los pasos para reproducir.</li>
+        <li><a class="mail-link" href="${MAILTO}">${MAIL} Escríbeme por correo</a> con el detalle y los pasos para reproducir.</li>
       </ul>
-      <p>Por favor no la publiques hasta que exista una correccion.</p>
-      <h2>Que esperar</h2>
+      <p>Por favor no la publiques hasta que exista una corrección.</p>
+      <h2>Qué esperar</h2>
       <ul>
-        <li>Confirmacion de recepcion en un plazo razonable.</li>
-        <li>Evaluacion del impacto y, de proceder, una correccion en una version parche.</li>
-        <li>Reconocimiento al reportante si asi lo desea.</li>
+        <li>Confirmación de recepción en un plazo razonable.</li>
+        <li>Evaluación del impacto y, de proceder, una corrección en una versión parche.</li>
+        <li>Reconocimiento al reportante si así lo desea.</li>
       </ul>
       <h2>Alcance</h2>
-      <p>La libreria es codigo del lado del cliente, sin dependencias de red en tiempo de ejecucion y sin recoleccion de datos. Los datos de ubigeo son publicos (INEI). Las heuristicas territoriales son de referencia.</p>`,
-    'cook.title': 'Politica de cookies',
-    'cook.sub': 'Ultima actualizacion: junio de 2026.',
+      <p>La librería es código del lado del cliente, sin dependencias de red en tiempo de ejecución y sin recolección de datos. Los datos de ubigeo son públicos (INEI). Las heurísticas territoriales son de referencia.</p>`,
+    'cook.title': 'Política de cookies',
+    'cook.sub': 'Última actualización: junio de 2026.',
     'cook.body': `
       <h2>Resumen</h2>
-      <p>Este sitio no usa cookies de rastreo, ni publicidad, ni analitica de terceros. La demostracion se ejecuta por completo en tu navegador.</p>
-      <h2>Que almacenamos</h2>
+      <p>Este sitio no usa cookies de rastreo, ni publicidad, ni analítica de terceros. La demostración se ejecuta por completo en tu navegador.</p>
+      <h2>Qué almacenamos</h2>
       <ul>
         <li><strong>Preferencias:</strong> claves en el almacenamiento local (localStorage): <span class="mono">psu-cookie</span> (aviso de cookies), <span class="mono">psu-theme</span> (tema) y <span class="mono">psu-lang</span> (idioma).</li>
       </ul>
-      <p>No se almacena ningun dato personal ni se comparte con terceros. Los codigos de ubigeo que escribes en la demo se procesan localmente.</p>
-      <h2>Como gestionarlo</h2>
+      <p>No se almacena ningún dato personal ni se comparte con terceros. Los códigos de ubigeo que escribes en la demo se procesan localmente.</p>
+      <h2>Cómo gestionarlo</h2>
       <ul>
-        <li>Puedes rechazar el aviso al cargar el sitio; igual funcionara todo.</li>
+        <li>Puedes rechazar el aviso al cargar el sitio; igual funcionará todo.</li>
         <li>Borra el almacenamiento del sitio desde tu navegador para restablecer las preferencias.</li>
       </ul>
       <h2>Contacto</h2>
-      <p>Dudas: <a class="mail-link" href="${MAILTO}">${MAIL} escribeme por correo</a>.</p>`,
+      <p>Dudas: <a class="mail-link" href="${MAILTO}">${MAIL} escríbeme por correo</a>.</p>`,
   },
   en: {
     'nav.demo': 'Demo', 'nav.api': 'API', 'nav.help': 'Help', 'nav.security': 'Security', 'nav.cookies': 'Cookies',

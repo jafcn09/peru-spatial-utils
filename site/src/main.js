@@ -39,50 +39,51 @@ const API = [
 
 const I18N = {
   es: {
-    'nav.skip': 'Saltar al contenido', 'nav.demo': 'Demo', 'nav.install': 'Instalacion', 'nav.api': 'API', 'nav.help': 'Ayuda', 'nav.playground': 'Playground',
+    'nav.skip': 'Saltar al contenido', 'nav.demo': 'Demo', 'nav.install': 'Instalación', 'nav.api': 'API', 'nav.help': 'Ayuda', 'nav.playground': 'Playground',
     'res.distance': 'Distancia a Lima', 'res.bbox': 'Bounding box (depto)',
     'demo.search': 'Buscar distrito por nombre', 'demo.searchPh': 'Ej. Canoas de Punta Sal', 'demo.copyJson': 'Copiar JSON', 'demo.jsonCopied': 'JSON copiado', 'ac.empty': 'Sin resultados',
     'map.caption': 'Consulta o toca un departamento para resaltarlo.', 'map.dept': 'Departamento', 'map.select': 'Explora departamentos del Perú y obtén información geoespacial lista para usar en tus aplicaciones.',
-    'pg.eyebrow': 'Playground', 'pg.title': 'Ejemplos por lenguaje', 'pg.sub': 'Elige una funcion y un lenguaje, y copia el snippet.',
+    'pg.eyebrow': 'Playground', 'pg.title': 'Ejemplos por lenguaje', 'pg.sub': 'Elige una función y un lenguaje, y copia el snippet.',
     'hero.eyebrow': 'Open source · MIT',
     'hero.title': 'Construye aplicaciones geoespaciales para Perú desde cualquier lenguaje.',
-    'hero.lead': 'Ubigeos INEI, conversión UTM/WGS84, coordenadas, áreas, distancias y análisis territorial.'
-+ ' Ligera, sin dependencias y disponible para TypeScript, Python, Dart, Go, Java, Rust y C.',
+    'hero.lead': 'Ubigeos INEI, conversión UTM/WGS84, coordenadas, áreas, distancias y análisis territorial. Ligera, sin dependencias y disponible para TypeScript, Python, Dart, Go, Java, Rust y C.',
     'hero.try': 'Probar la demo', 'hero.install': 'Comenzar', 'badge.langs': 'Multilenguaje',
+    'check.deps': 'Sin dependencias', 'check.offline': 'Listo offline', 'check.license': 'Licencia MIT', 'check.multilang': 'Multilenguaje', 'check.client': '100% en el cliente',
+    'metric.langs': 'lenguajes soportados', 'metric.ubigeos': 'ubigeos', 'metric.regions': 'regiones', 'metric.offline': 'offline',
     'demo.eyebrow': 'Ejemplo en tiempo real', 'demo.title': 'Escribe un ubigeo y obtén el territorio',
-    'demo.sub': 'La consulta corre en tu navegador con la libreria real, sin enviar nada a un servidor.',
-    'demo.label': 'Codigo de ubigeo (INEI)', 'demo.hint': '2 digitos = departamento, 4 = provincia, 6 = distrito.',
-    'demo.hintLen': 'Ingresa 2, 4 o 6 digitos.', 'demo.hintNotFound': 'Ese ubigeo no existe en el dataset INEI.',
-    'demo.waiting': 'Esperando un codigo valido...', 'demo.none': 'Sin coincidencias.',
+    'demo.sub': 'La consulta corre en tu navegador con la librería real, sin enviar nada a un servidor.',
+    'demo.label': 'Código de ubigeo (INEI)', 'demo.hint': '2 dígitos = departamento, 4 = provincia, 6 = distrito.',
+    'demo.hintLen': 'Ingresa 2, 4 o 6 dígitos.', 'demo.hintNotFound': 'Ese ubigeo no existe en el dataset INEI.',
+    'demo.waiting': 'Esperando un código válido...', 'demo.none': 'Sin coincidencias.',
     'res.district': 'Distrito', 'res.province': 'Provincia', 'res.department': 'Departamento', 'res.coords': 'Coordenadas',
-    'install.eyebrow': 'Instalacion', 'install.title': 'Un paquete por ecosistema', 'install.sub': 'Misma API, mismos resultados. Elige tu lenguaje y copia.',
+    'install.eyebrow': 'Instalación', 'install.title': 'Un paquete por ecosistema', 'install.sub': 'Misma API, mismos resultados. Elige tu lenguaje y copia.',
     'copy': 'Copiar', 'copied': 'Copiado',
-    'features.eyebrow': 'Modulos', 'features.title': 'Todo lo esencial para geodatos del Peru',
-    'api.eyebrow': 'Documentacion de la API', 'api.title': 'Funciones y firmas', 'api.sub': 'Nombres en camelCase; cada lenguaje adapta su convencion idiomatica.',
-    'footer.tagline': 'Utilidades geoespaciales del Peru, open source bajo licencia MIT.',
-    'footer.packages': 'Paquetes', 'footer.resources': 'Recursos', 'footer.legal': 'Legal', 'footer.docs': 'Documentacion',
-    'footer.help': 'Ayuda', 'footer.security': 'Politica de seguridad', 'footer.cookies': 'Cookies', 'footer.dataset': 'Datos de ubigeo: INEI',
-    'cookie.text': 'Usamos almacenamiento local solo para recordar tu preferencia de cookies. No hay rastreo ni anuncios. <a href="cookies.html" style="color:var(--accent-strong);font-weight:600">Mas informacion</a>.',
+    'features.eyebrow': 'Módulos', 'features.title': 'Todo lo esencial para geodatos del Perú',
+    'api.eyebrow': 'Documentación de la API', 'api.title': 'Funciones y firmas', 'api.sub': 'Nombres en camelCase; cada lenguaje adapta su convención idiomática.',
+    'footer.tagline': 'Utilidades geoespaciales del Perú, open source bajo licencia MIT.',
+    'footer.packages': 'Paquetes', 'footer.resources': 'Recursos', 'footer.legal': 'Legal', 'footer.docs': 'Documentación',
+    'footer.help': 'Ayuda', 'footer.security': 'Política de seguridad', 'footer.cookies': 'Cookies', 'footer.dataset': 'Datos de ubigeo: INEI',
+    'cookie.text': 'Usamos almacenamiento local solo para recordar tu preferencia de cookies. No hay rastreo ni anuncios. <a href="cookies.html" style="color:var(--accent-strong);font-weight:600">Más información</a>.',
     'cookie.reject': 'Rechazar', 'cookie.accept': 'Aceptar',
     features: {
-      ubigeo: { title: 'Ubigeos', text: 'getRegion, getProvince, getDistrict, isValidUbigeo y busqueda sobre el dataset INEI completo: 25 departamentos, 196 provincias y 1893 distritos.' },
-      crs: { title: 'Coordenadas', text: 'toUTM y toWGS84 con datum WGS84 explicito para las zonas UTM 17S, 18S y 19S del Peru.' },
-      area: { title: 'Areas', text: 'toHectares, toKm2 y formatArea para presentar superficies con separador de miles y unidades legibles.' },
-      distance: { title: 'Distancia', text: 'distance entre dos puntos [lng, lat] usando la formula haversine, en kilometros.' },
-      bbox: { title: 'Bounding box', text: 'boundingBox sobre cualquier geometria GeoJSON: recorre todas las coordenadas.' },
-      territorial: { title: 'Territorial', text: 'recommendationFor, classifyHazard y calculateTerritorialRisk: heuristicas documentadas, solo de referencia.' },
+      ubigeo: { title: 'Ubigeos', text: 'getRegion, getProvince, getDistrict, isValidUbigeo y búsqueda sobre el dataset INEI completo: 25 departamentos, 196 provincias y 1893 distritos.' },
+      crs: { title: 'Coordenadas', text: 'toUTM y toWGS84 con datum WGS84 explícito para las zonas UTM 17S, 18S y 19S del Perú.' },
+      area: { title: 'Áreas', text: 'toHectares, toKm2 y formatArea para presentar superficies con separador de miles y unidades legibles.' },
+      distance: { title: 'Distancia', text: 'distance entre dos puntos [lng, lat] usando la fórmula haversine, en kilómetros.' },
+      bbox: { title: 'Bounding box', text: 'boundingBox sobre cualquier geometría GeoJSON: recorre todas las coordenadas.' },
+      territorial: { title: 'Territorial', text: 'recommendationFor, classifyHazard y calculateTerritorialRisk: heurísticas documentadas, solo de referencia.' },
     },
     api: {
-      getRegion: 'Devuelve el departamento para un codigo de 2 digitos.',
-      getProvince: 'Devuelve la provincia para un codigo de 4 digitos.',
-      getDistrict: 'Devuelve el distrito para un codigo de 6 digitos.',
-      isValidUbigeo: 'Indica si el codigo (2, 4 o 6 digitos) existe en su nivel.',
+      getRegion: 'Devuelve el departamento para un código de 2 dígitos.',
+      getProvince: 'Devuelve la provincia para un código de 4 dígitos.',
+      getDistrict: 'Devuelve el distrito para un código de 6 dígitos.',
+      isValidUbigeo: 'Indica si el código (2, 4 o 6 dígitos) existe en su nivel.',
       toUTM: 'Convierte WGS84 a UTM (zona 17S, 18S o 19S) sobre el datum WGS84.',
-      toWGS84: 'Convierte UTM de vuelta a coordenadas geograficas WGS84.',
+      toWGS84: 'Convierte UTM de vuelta a coordenadas geográficas WGS84.',
       formatArea: 'Formatea una superficie en metros cuadrados a una cadena legible.',
-      distance: 'Distancia haversine en kilometros entre dos puntos [lng, lat].',
-      boundingBox: 'Caja envolvente de una geometria GeoJSON.',
-      calculateTerritorialRisk: 'Heuristica de riesgo a partir de intersecciones; solo referencia.',
+      distance: 'Distancia haversine en kilómetros entre dos puntos [lng, lat].',
+      boundingBox: 'Caja envolvente de una geometría GeoJSON.',
+      calculateTerritorialRisk: 'Heurística de riesgo a partir de intersecciones; solo referencia.',
     },
   },
   en: {
@@ -94,7 +95,9 @@ const I18N = {
     'hero.eyebrow': 'Open source · MIT',
     'hero.title': 'Peru spatial data, in any language',
     'hero.lead': 'INEI ubigeos, UTM/WGS84 conversion, area, distance, bounding box and territorial analysis. Lightweight, dependency-free and verified against the same vectors in TypeScript, Python, Dart, Go, Java, Rust and C.',
-    'hero.try': 'Try the demo', 'hero.install': 'How to install', 'badge.langs': '7 languages',
+    'hero.try': 'Try the demo', 'hero.install': 'Get started', 'badge.langs': 'Multi-language',
+    'check.deps': 'Zero Dependencies', 'check.offline': 'Offline Ready', 'check.license': 'MIT License', 'check.multilang': 'Multi-language', 'check.client': '100% Client-side',
+    'metric.langs': 'supported languages', 'metric.ubigeos': 'ubigeos', 'metric.regions': 'regions', 'metric.offline': 'offline',
     'demo.eyebrow': 'Live example', 'demo.title': 'Type a ubigeo and get the territory',
     'demo.sub': 'The lookup runs in your browser with the real library, nothing is sent to a server.',
     'demo.label': 'Ubigeo code (INEI)', 'demo.hint': '2 digits = department, 4 = province, 6 = district.',
@@ -568,6 +571,32 @@ function setupLang(runDemo) {
   });
 }
 
+function setupMetrics() {
+  const nums = document.querySelectorAll('.metric-num');
+  if (!nums.length) return;
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const run = (el) => {
+    const to = parseInt(el.getAttribute('data-to'), 10) || 0;
+    const suffix = el.getAttribute('data-suffix') || '';
+    if (reduce) { el.textContent = to + suffix; return; }
+    const dur = 1100;
+    const start = performance.now();
+    const step = (t) => {
+      const p = Math.min(1, (t - start) / dur);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  if (!('IntersectionObserver' in window)) { nums.forEach(run); return; }
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) { run(entry.target); obs.unobserve(entry.target); }
+    });
+  }, { threshold: 0.4 });
+  nums.forEach((n) => obs.observe(n));
+}
+
 function setYear() {
   const y = document.getElementById('year');
   if (y) y.textContent = String(new Date().getFullYear());
@@ -591,5 +620,6 @@ setupNav();
 setupReveal();
 setupTheme();
 setupLang(runDemo);
+setupMetrics();
 setupCookies();
 setYear();
